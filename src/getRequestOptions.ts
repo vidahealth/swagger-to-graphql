@@ -48,8 +48,12 @@ export function getRequestOptions({
     bodyType: formData ? 'formData' : 'json',
   };
 
-  parameterDetails.forEach(({ name, swaggerName, type, required }) => {
+  parameterDetails.forEach((detail) => {
+    const { name, swaggerName, type, required } = detail
     const value = parameterValues[name];
+    
+    console.log(detail)
+    console.log(value)
 
     if (required && !value && value !== '')
       throw new Error(
