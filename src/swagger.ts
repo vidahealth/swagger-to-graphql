@@ -159,6 +159,8 @@ export const getServerPath = (schema: SwaggerSchema): string | undefined => {
 };
 
 export const getParamDetails = (param: Param): EndpointParam => {
+  console.log('SWAGGER PARAM')
+  console.log(param)
   const name = replaceOddChars(param.name);
   const swaggerName = param.name;
   if (isOa3Param(param)) {

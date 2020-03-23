@@ -52,9 +52,6 @@ export function getRequestOptions({
     const { name, swaggerName, type, required } = detail
     const value = parameterValues[name];
 
-    console.log(detail)
-    console.log(value)
-
     if (required && !value && value !== '')
       throw new Error(
         `No required request field ${name} for ${method.toUpperCase()} ${path}`,
