@@ -134,34 +134,28 @@ export const getTypeFields = (
         properties[makeValidName(key)] = jsonSchema.properties[key];
       });
     }
-    return Object.keys(properties).reduce(
-      (
-        prev,
+    return Object.keys(properties).reduce((prev, propertyName) => {
+      const propertySchema = properties[propertyName];
+      const type = jsonSchemaTypeToGraphQL(
+        title,
+        propertySchema,
         propertyName,
-      ) => {
-        const propertySchema = properties[propertyName];
-        const type = jsonSchemaTypeToGraphQL(
-          title,
-          propertySchema,
-          propertyName,
-          isInputType,
-          gqlTypes,
-          !!(
-            isObjectType(jsonSchema) &&
-            jsonSchema.required &&
-            jsonSchema.required.includes(propertyName)
-          ),
-        );
-        return {
-          ...prev,
-          [propertyName]: {
-            description: propertySchema.description,
-            type,
-          },
-        };
-      },
-      {},
-    );
+        isInputType,
+        gqlTypes,
+        !!(
+          isObjectType(jsonSchema) &&
+          jsonSchema.required &&
+          jsonSchema.required.includes(propertyName)
+        ),
+      );
+      return {
+        ...prev,
+        [propertyName]: {
+          description: propertySchema.description,
+          type,
+        },
+      };
+    }, {});
   };
 };
 

@@ -49,8 +49,8 @@ export function getRequestOptions({
     bodyType: formData ? 'formData' : 'json',
   };
 
-  parameterDetails.forEach((detail) => {
-    const { name, swaggerName, type, required } = detail
+  parameterDetails.forEach(detail => {
+    const { name, swaggerName, type, required, explode } = detail;
     const value = parameterValues[name];
 
     if (required && !value && value !== '')
@@ -74,8 +74,16 @@ export function getRequestOptions({
             : result.path;
         break;
       case 'query':
-        result.query = result.query || {};
-        result.query[swaggerName] = value;
+        if (explode) {
+          value &&
+            Object.keys(value).forEach(explodedParamName => {
+              result.query = result.query || {};
+              result.query[explodedParamName] = value[explodedParamName];
+            });
+        } else {
+          result.query = result.query || {};
+          result.query[swaggerName] = value;
+        }
         break;
       case 'header':
         result.headers = result.headers || {};
