@@ -51,7 +51,7 @@ export function getRequestOptions({
   parameterDetails.forEach((detail) => {
     const { name, swaggerName, type, required } = detail
     const value = parameterValues[name];
-    
+
     console.log(detail)
     console.log(value)
 

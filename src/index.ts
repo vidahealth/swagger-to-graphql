@@ -54,6 +54,8 @@ const getFields = <TContext>(
     })
     .reduce((result, operationId) => {
       const endpoint: Endpoint = endpoints[operationId];
+      console.log('ENDPOINT')
+      console.log(endpoint)
       const type = jsonSchemaTypeToGraphQL(
         operationId,
         endpoint.response || { type: 'object', properties: {} },
