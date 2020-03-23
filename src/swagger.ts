@@ -58,6 +58,7 @@ export interface BodyParam {
   required?: boolean;
   schema: JSONSchemaType;
   in: 'body';
+  explode?: boolean;
 }
 
 export interface Oa2NonBodyParam {
@@ -65,12 +66,14 @@ export interface Oa2NonBodyParam {
   type: JSONSchemaTypes;
   in: 'header' | 'query' | 'formData' | 'path';
   required?: boolean;
+  explode?: boolean;
 }
 
 export interface Oa3Param {
   name: string;
   in: 'header' | 'query' | 'formData' | 'path';
   required?: boolean;
+  explode?: boolean;
   schema: JSONSchemaType;
 }
 
@@ -159,17 +162,16 @@ export const getServerPath = (schema: SwaggerSchema): string | undefined => {
 };
 
 export const getParamDetails = (param: Param): EndpointParam => {
-  console.log('SWAGGER PARAM')
-  console.log(param)
   const name = replaceOddChars(param.name);
   const swaggerName = param.name;
   if (isOa3Param(param)) {
-    const { schema, required, in: type } = param as Oa3Param;
+    const { schema, required, in: type, explode } = param as Oa3Param;
     return {
       name,
       swaggerName,
       type,
       required: !!required,
+      explode: !!explode,
       jsonSchema: schema,
     };
   }
@@ -179,6 +181,7 @@ export const getParamDetails = (param: Param): EndpointParam => {
     swaggerName,
     type: param.in,
     required: !!param.required,
+    explode: !!param.explode,
     jsonSchema: param,
   };
 };

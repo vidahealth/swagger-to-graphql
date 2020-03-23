@@ -2,6 +2,7 @@ import { JSONSchemaType } from './json-schema';
 
 export interface EndpointParam {
   required: boolean;
+  explode: boolean;
   type: 'header' | 'query' | 'formData' | 'path' | 'body';
   name: string;
   swaggerName: string;
