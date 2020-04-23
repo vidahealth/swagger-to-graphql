@@ -27,6 +27,5 @@ bundle.js
 coverage
 .nyc_output
 flow-coverage
-yarn.lock
 
 lib/
